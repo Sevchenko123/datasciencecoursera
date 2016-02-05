@@ -1,0 +1,69 @@
+---
+output:  
+  html_document:    
+    keep_md: yes
+---
+
+# Reproducible Research Assignment 1 
+
+## Loading and preprocessing the data
+
+```{r,echo=TRUE}
+ad <- read.csv("activity.csv",sep=",",header=T)  # reads the data 
+```
+
+## What is mean total number of steps taken per day ?
+
+```{r,echo=TRUE}
+library(ggplot2)
+t <- tapply(ad$steps,ad$date,sum,na.rm=T)
+qplot(t,fill=I("blue"),xlab="Number of steps",ylab="Number of days",main="Number of Steps taken per day",binwidth=500)
+mean(t,na.rm=T)
+median(t,na.rm=T)
+```
+
+## What is the average daily activity pattern?
+
+``` {r, echo=TRUE}
+avgsteps_time <- aggregate(x=list(steps=ad$steps), by=list(interval=ad$interval),mean,na.rm=T)
+ggplot(data=avgsteps_time, aes(x=interval, y=steps))+geom_line(color="firebrick")+labs(x="5 minute time interval",y="Average Steps taken",title="Time series plot of average steps per time interval")
+max_steps <- avgsteps_time[which.max(avgsteps_time$steps),]
+max_steps
+```
+
+## Imputing missing values
+
+Finding how many missing values exist in the data
+```{r,echo=TRUE}
+missing <- is.na(ad$steps)
+table(missing)
+```
+Impute the missing values by using impute function in impute package
+```{r,echo=TRUE}
+ad_all <- ad
+Na <- is.na(ad_all$steps)
+avg_interval <- tapply(ad_all$steps, ad_all$interval, mean, na.rm=TRUE, simplify=TRUE)
+ad_all$steps[Na] <- avg_interval[as.character(ad_all$interval[Na])]
+```
+Check that there are no missing values
+
+```{r,echo=TRUE}
+sum(is.na(ad_all$steps))
+```
+Make a Histogram of the total number of steps taken per day on imputed data
+
+```{r, echo =TRUE}
+imputed_plot <- tapply(ad_all$steps,ad_all$date,sum)
+qplot(imputed_plot,fill=I("blue"),binwidth=500)+labs(x="Number of Steps",y="Number of Days",title="Number of Steps per day (Imputed data)")
+
+mean(imputed_plot) # Mean of total number of steps per day
+median(imputed_plot) # Median of total number of steps per day
+```
+## Are there differences in activity patterns between weekdays and weekends?
+
+```{r,echo=TRUE}
+ad_all$day <- ifelse(as.POSIXlt(ad_all$date)$wday %in% c(0,6), 'weekend', 'weekday')
+averageactivity <- aggregate(steps~interval+day,data=ad_all,mean)
+library(ggplot2)
+ggplot(averageactivity,aes(interval,steps))+geom_line(color="firebrick")+facet_grid(day~.)+labs(x="5 minute time interval",y="Average steps taken")
+```
