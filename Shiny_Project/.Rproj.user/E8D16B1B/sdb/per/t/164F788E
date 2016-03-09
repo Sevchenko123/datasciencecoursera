@@ -1,0 +1,16 @@
+{
+    "contents" : "---\ntitle       : Title\nsubtitle    : subtitle\nauthor      : me        \njob         : internet\nframework   : revealjs    # {io2012, html5slides, shower, dzslides, ...}\nhighlighter : highlight.js  # {highlight.js, prettify, highlight}\nhitheme     : default    # \nwidgets     : []            # {mathjax, quiz, bootstrap}\nmode        : selfcontained # {standalone, draft}\nknit        : slidify::knit2slides\n---\n\n\n## Data Products Project\n \n**Samir P. Yelne**\n\n---\n\n### Application Detail\n\nThis application generates a simple linear regression model between mpg, the dependent variable and any other variable which the user can choose as an independent variable. \n\nThe application can be viewed at :-\n\n* Rstudio's Shiny Server : [Simple Linear Regression App] (https://samiryelne.shinyapps.io/Shiny_Project/)\n\n---\n\n### Dataset Information\n\nThe **mtcars** dataset comprises of fuel consumption and other ten aspects of automobile design and performance for 32 automobiles, 1973–74 models. \n\nThe names of the columns in the dataset are :-\n```{r,echo=FALSE,warning=FALSE}\nlibrary(datasets)\nnames(mtcars)\n```\n\n---\n\n### How to use the app\n\n* The user is required to choose the independent variable. The dependent variable is always mpg.\n* As soon as the user selects the independent variable, a linear regression model plot is shown.\n* The user could change the independent variable, in such case the plot will be updated.\n* The application also shows the summary statistics of the selected variable.\n\n---\n\n### Example of lm() function output for Simple Linear Regression \n```{r,echo=FALSE}\nlibrary(datasets)\nlm(mpg~hp,data=mtcars)\n```\n\n\n",
+    "created" : 1456367586653.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "650704362",
+    "id" : "164F788E",
+    "lastKnownWriteTime" : 1456376135,
+    "path" : "~/Desktop/Shiny_Project/Samir/index.Rmd",
+    "project_path" : "Samir/index.Rmd",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_markdown"
+}

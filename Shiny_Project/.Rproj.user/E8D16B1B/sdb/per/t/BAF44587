@@ -1,0 +1,16 @@
+{
+    "contents" : "library(shiny)\nlibrary(ggplot2)\ndata <- mtcars\nshinyServer(function(input, output) {\n       Y <- reactive({\n                paste(\"mpg ~\", \"as.integer(\", input$ind,\")\")\n        })\n        \n        myFit <- reactive({\n                lm(as.formula(Y()),data=data)\n        })\n        \n        output$summary <- renderPrint({\n                independent <- input$ind\n                if(independent == \"cyl\")\n                        summary(mtcars$cyl)\n                else if(independent == \"disp\")\n                        summary(mtcars$disp)\n                else if(independent == \"hp\")\n                        summary(mtcars$hp)\n                else if(independent == \"drat\")\n                        summary(mtcars$drat)\n                else if(independent == \"wt\")\n                        summary(mtcars$wt)\n                else if(independent == \"qsec\")\n                        summary(mtcars$qsec)\n                else if(independent == \"vs\")\n                        summary(mtcars$vs)\n                else if(independent == \"am\")\n                        summary(mtcars$am)\n                else if(independent == \"gear\")\n                        summary(mtcars$gear)\n                else if(independent == \"carb\")\n                        summary(mtcars$carb)\n                else if(independent == \"mpg\")\n                        summary(mtcars$mpg)\n                \n        })\n        \n        \n        output$text <- renderText({\n                paste(\"Regression Model:\", \"mpg ~\", input$ind)\n        })\n        \n        output$myPlot <- renderPlot ({\n                with(data, {plot(as.formula(Y()),xlab=input$ind,ylab=\"mpg\")\n                            abline(myFit())\n                })\n        })\n})\n",
+    "created" : 1456360217196.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2062675135",
+    "id" : "BAF44587",
+    "lastKnownWriteTime" : 1456361934,
+    "path" : "~/Desktop/Shiny_Project/server.R",
+    "project_path" : "server.R",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

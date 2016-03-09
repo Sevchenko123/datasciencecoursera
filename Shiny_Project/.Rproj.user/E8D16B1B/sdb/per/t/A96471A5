@@ -1,0 +1,16 @@
+{
+    "contents" : "library(shiny)\nlibrary(datasets)\nrequire(graphics)\nshinyUI(fluidPage(\n        headerPanel(h2(\"Coursera Project\")),\n        sidebarPanel(\n                h3('Input Panel'),\n                p('Select any independent variable with mpg as a dependent variable:'),\n                selectInput('ind', label='Independent', selected='cyl', choices=names(mtcars)),\n                h3('Documentation'),\n                p(\"This application uses the mtcars dataset to plot a\",\n                  \"linear regression model using two variables of this dataset:\",\n                  \"one as independent variable, which can be chosen, and the\",\n                  \"dependent variable is mpg.\"),\n                p(\"The app generates a univariate/linear regression model with respect to the independent and dependent variable.\")),\n        \n        # plot and output\n        mainPanel(\n                div(h2(\"Developing Data Products\", style=\"color:#E41A1C;margin:-65px 0px 10px 20px;\")),\n                h4('Summary of Selected Attribute'),\n                h4(verbatimTextOutput(\"summary\")),\n                h4(textOutput('text')),\n                plotOutput('myPlot'))\n        \n))",
+    "created" : 1456360216822.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4198668847",
+    "id" : "A96471A5",
+    "lastKnownWriteTime" : 1456363142,
+    "path" : "~/Desktop/Shiny_Project/ui.R",
+    "project_path" : "ui.R",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}
