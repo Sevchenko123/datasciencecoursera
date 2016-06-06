@@ -1,0 +1,16 @@
+{
+    "contents" : "\n========================================================\nauthor:Samir Yelne\ndate:Jun 6th, 2016\n\nWhat is a Predictive Text App?\n========================================================\n\nThis application is used to predict the next likely word using the previous typed words.\n\nIt is built using a predictive text model using an N-Gram approach. Specifically, I have used a trigram model.\n\nThe main advantages of using this application are :\n\n* Very useful for typing on mobile devices.\n* The app can be used in wide range of activities ranging from banking, to social networking to writing emails etc.\n* This app can improve spelling accuracy.\n\n\n========================================================\n## The App Interface\n![App Interface](DS.png)\n\n***\n\nThe app allows you to enter a word or phrase of words. Once you entered your text it gets reformatted and cleaned appropriately for predicition purposes.\n\nAs soon as you click \"Predict Next Word\" button, the app displays the likely words which you may use in your sentence. \n\nFor example, I typed \"Rest in\" and the app gave the prediction of next word to be \"peace\" based on these two words.\n\nHow does it work?\n========================================================\n\nThe app uses the [HC Corpora][1] data set determining word frequency.\n\n* The [HC Corpora][1] is a collection of corpora for various languages freely available to download. The corpora have been collected from numerous different webpages, with the aim of getting a varied and comprehensive corpus. The data set is then categorized into the most frequent word combinations (N-grams).\n\n* Using these N-gram frequencies the app can take the user submitted sentences and quickly calculate the most likely next word.\n\n[1]:http://www.corpora.heliohost.org/index.html\n\nReferences\n========================================================\n\nWorking Version of [Predictive Text App][1]\n\nThe source [HC Corpora][2] data set and associated [About the Corpora][3].\n\n[1]: https://samiryelne.shinyapps.io/DS_2/\n[2]: http://www.corpora.heliohost.org/index.html\n[3]: http://www.corpora.heliohost.org/aboutcorpus.html",
+    "created" : 1465236832449.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2013603536",
+    "id" : "9644FFF0",
+    "lastKnownWriteTime" : 1465241015,
+    "path" : "~/Desktop/DS_Capstone/DS_2/Capstone_Pres.Rpres",
+    "project_path" : "Capstone_Pres.Rpres",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_presentation"
+}

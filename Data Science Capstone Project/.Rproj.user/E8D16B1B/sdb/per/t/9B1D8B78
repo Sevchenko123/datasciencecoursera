@@ -1,0 +1,17 @@
+{
+    "contents" : "library(shiny)\n\n# Define UI for dataset viewer application\nshinyUI(fluidPage(\n        \n        # Application title.\n        titlePanel(\"Predictive Text Model using N-gram approach\"),\n        \n        sidebarLayout(\n                sidebarPanel(\n                        textInput(\"obs\", \"Enter Your Statement :\"),\n                        \n                        helpText(\"This widget will use this statement to predict the most likely next word.\"),\n                        \n                        submitButton(\"Predict Next Word\")\n                ),\n                \n                mainPanel(\n                        h6(\"Your text :\"),\n                        textOutput(\"Original\"),\n                        br(),\n                        h6(\"Your statement has been formatted as per certain conditions:\"),\n                        textOutput(\"Translated\"),\n                        br(),\n                        br(),\n                        h3(\"Next Word :\"),\n                        div(textOutput(\"BestGuess\"), style = \"color:blue\"),\n                        br(),\n                        h3(\"The model guessed your word based on the following data:\"),\n                        tableOutput(\"view\")\n                )\n        )\n))\n",
+    "created" : 1462597925339.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2677593388",
+    "id" : "9B1D8B78",
+    "lastKnownWriteTime" : 1465240220,
+    "path" : "~/Desktop/DS_Capstone/DS_2/Ui.R",
+    "project_path" : "Ui.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

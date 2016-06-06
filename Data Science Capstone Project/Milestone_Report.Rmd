@@ -1,0 +1,136 @@
+---
+title: "Data Science Capstone Milestone Report"
+author: "Samir Yelne"
+date: "April 29, 2016"
+output: html_document
+---
+
+#Synopsis 
+
+The goal of this project is just to display that you've gotten used to working with the data and that you are on track to create your prediction algorithm. 
+
+The proposal of this project is develop a predictive text model that returns a suggestion of the next word based on the inclusion of a preliminary text. This feature is commonly found in web search sites, helping in a better experience for the users.
+
+The motivation for this project is to: 1. Demonstrate that data is downloaded and have successfully loaded. 2. Create a basic report of summary statistics about the data sets. 3. Report any interesting findings that is amassed so far. 4. Get feedback on the plans for creating a prediction algorithm and Shiny app.
+
+#Loading the Data 
+```{r,echo=TRUE,warning=FALSE,cache=TRUE}
+blogs <- readLines("en_US.blogs.txt")
+news <- readLines("en_US.news.txt")
+twitter <- readLines("en_US.twitter.txt")
+```
+
+#Analyzing Data
+**Size of Files**
+```{r,echo=TRUE,warning=FALSE,cache=TRUE}
+file.info("en_US.blogs.txt")$size / 1024^2
+file.info("en_US.news.txt")$size / 1024^2
+file.info("en_US.twitter.txt")$size / 1024^2
+```
+The total size of US.news.txt is 196 MB.
+The total size of US.blogs.txt is 200 MB.
+The total size of US.twitter.txt is 159 MB.
+The total size of all the three files is 555 MB. 
+
+**File length**
+```{r,echo=TRUE,warning=FALSE,cache=TRUE}
+length(blogs)
+length(twitter)
+length(news)
+```
+The number of lines in blogs data is 899,288.
+The number of lines in twitter data is 236,0148.
+The number of lines in news data is 101,0242.
+
+**Maximum Characters in one single line**
+```{r,echo=TRUE,warning=FALSE,cache=TRUE}
+max(nchar(blogs))
+max(nchar(news))
+max(nchar(twitter))
+```
+The maximum characters in one single line in blogs data is 40,833.
+The maximum characters in one single line in news data is 11,384.
+The maximum characters in one single line in twitter data is 140.
+
+#Analyzing Data Sets
+
+We use a subset of the data for analysis, as it wont be possible to process the entire data due to the processing time required. We also filter out the profane words from the data as we don´t want to make a prediction for these words. 
+
+```{r,echo=TRUE,warning=FALSE,cache=TRUE}
+sample_blogs <- sample(blogs,10000)
+sample_twitter <- sample(twitter,10000)
+sample_news <- sample(news,10000)
+combined.data <- c(sample_blogs,sample_twitter,sample_news)
+```
+
+#Cleaning Data
+
+The data are ready for the cleaning phase. In this stage will be carried out the following activities:
+
+* Change to lower cases.
+
+* Remove punctuations.
+
+* Remove numbers.
+
+* Remove Stop Word “English”.
+
+* Remove unnecessary spaces from the dataset.
+
+* Remove profanity words through a reference list [Bad Words Link](http://www.freewebheaders.com/full-list-of-bad-words-banned-by-google/).
+
+* Stem the words. 
+
+```{r,echo=TRUE,warning=FALSE,cache=TRUE}
+library(NLP)
+library(tm)
+library(RColorBrewer)
+library(wordcloud)
+b <- readLines('bad_words.txt',encoding="latin1", warn=FALSE, skipNul=TRUE) # bad words to be removed from the sample
+combined.data <- removePunctuation(combined.data)
+combined.data <- removeNumbers(combined.data)
+combined.data <- tolower(combined.data)
+combined.data <- stemDocument(combined.data)
+combined.data <- removeWords(combined.data, words=c('the', stopwords("english")))
+combined.data <- removeWords(combined.data,b)
+combined.data <- stripWhitespace(combined.data)
+```
+#N-Grams
+
+Next we write a function for N-Gram.
+An n-gram is a contiguous sequence of n items from a given sequence of text or speech. The items can be phonemes, syllables, letters, words or base pairs according to the application. The n-grams typically are collected from a text or speech corpus.
+
+For a Unigram I created a wordcloud to represent the top words in the data sample.
+
+```{r,echo=TRUE,warning=FALSE,cache=TRUE}
+library(wordcloud)
+wordcloud(combined.data, max.words=100, random.order=FALSE, rot.per=0.5, colors=brewer.pal(8, 'Accent'))
+```
+
+Further processing of the sample :
+
+```{r,echo=TRUE,warning=FALSE,cache=TRUE}
+combined.data <- paste0(unlist(combined.data), collapse=" ")
+combined.data <- strsplit(combined.data, " ", fixed=TRUE)[[1L]]
+combined.data <- combined.data[combined.data != ""]
+```
+
+Create a barplot of top Bigrams :
+
+```{r,echo=TRUE,warning=FALSE,cache=TRUE}
+bigrams <- vapply(ngrams(combined.data, 2L), paste, "", collapse=" ")
+top_bigrams <- sort(table(bigrams), decreasing=T)[1:5]
+barplot(top_bigrams)
+```
+
+Create a barplot of top Trigrams :
+
+```{r,echo=TRUE,warning=FALSE,cache=TRUE}
+tri <- vapply(ngrams(combined.data,3L),paste, "", collapse=" ")
+top_tri <- sort(table(tri),decreasing=T)[1:5]
+barplot(top_tri)
+```
+
+#Future Plans for the Project :
+
+In future a text prediction model based on N-gram will be employed. The N-gram model allows one to predict the next word of a sequence of N words given the previous (N-1) words. Given the limitation of hardware and processing time, a trigram model will likely be chosen to compute the relative frequency of an observed particular three-word sequence to its (two-word) prefix. In other words, the plan is to build a table of probabilities of trigram counts and make prediction (i.e. the word with the highest probability given the preceding two words) based on the table.
